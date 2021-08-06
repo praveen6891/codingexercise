@@ -94,4 +94,33 @@ sub select_email_list {
 	return $data;
 }
 
+sub select_email_data {
+	my ($self,$date) = @_;
+	my ($data);
+	eval{
+		$self->{_sth} = $self->{_dbh}->prepare("SELECT C.CUSTOMER_ID,C.PRODUCT_NAME,C.DOMAIN,C.SUB_END_DATE,E.EMAIL_ID FROM CUSTOMER C,EMAIL_SCHEDULE E WHERE C.CUSTOMER_ID=E.CUSTOMER_ID AND C.PRODUCT_NAME=E.PRODUCT_NAME AND C.DOMAIN=E.DOMAIN AND E.EMAIL_STATUS ='N' AND E.EMAIL_DATE = TO_DATE(?,\'YYYY-MM-DD\')"); 
+		$self->{_sth}->execute($date);
+		$data = $self->{_sth}->fetchall_arrayref; 
+	};
+	if($@){
+		print "Failed to fetch records for from email_schedule and customer table for email date $date\n";
+	}	
+	return $data;
+}
+
+sub update_email_schedule {
+	my ($self,$data,$date) = @_;
+	
+	eval{
+		$self->{_sth} = $self->{_dbh}->prepare("UPDATE EMAIL_SCHEDULE SET EMAIL_STATUS=\'Y\' WHERE CUSTOMER_ID=? AND PRODUCT_NAME=? AND DOMAIN=? AND EMAIL_DATE = ?");
+		$self->{_sth}->execute($data->[0],$data->[1],$data->[2],$date);
+	};
+	if($@){
+		print "Failed to insert records for customer_id $data->[0] in email_schedule table\n";
+	}else{
+		$self->{_sth}->finish();
+		$self->{_dbh}->commit();
+	}
+}
+
 1;
