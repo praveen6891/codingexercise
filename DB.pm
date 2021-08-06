@@ -80,5 +80,18 @@ sub delete_email_schedule {
 	
 }
 
+sub select_email_list {
+	my ($self) = @_;
+	my ($data);
+	eval{
+		$self->{_sth} = $self->{_dbh}->prepare("SELECT CUSTOMER_ID,PRODUCT_NAME,DOMAIN,EMAIL_DATE FROM EMAIL_SCHEDULE ORDER BY EMAIL_DATE");
+		$self->{_sth}->execute();
+		$data = $self->{_sth}->fetchall_arrayref; 
+	};
+	if($@){
+		print "Failed to fetch records from email_schedule table\n";
+	}	
+	return $data;
+}
 
 1;

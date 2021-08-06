@@ -48,6 +48,16 @@ foreach my $data (@data){
 	$products->delete_product($data,$dbh) if($data->[$#$data] eq 'D');
 }
 
+#list email schedule
 
+my $email_schedule=$dbh->select_email_list();
+
+my $tb = Text::Table->new("CustomerID", "ProductName", "Domain", "EmailDate");
+
+foreach (@$email_schedule){
+	$tb->load($_);
+}
+
+print $tb;
 
 exit 0;
