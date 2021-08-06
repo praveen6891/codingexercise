@@ -31,7 +31,24 @@ while(<$fh>){
 	}
 	else{
 		my @input_data =split/\|/,$_;
-		push (@data,[split/\|/,$_]);
+		if ($input_data[0] !~ /^\w+$/){
+			print "Customer id should be alphanumeric only\n";
+			next;
+		}elsif($input_data[1] !~ /^[A-Za-z]+$/){
+			print"Product name should be alphabets only\n";
+			next;
+		}elsif($input_data[2] !~ /^[A-Za-z]+\.(com|net)$/){
+			print "Inavlid Domain name\n";
+			next;
+		}elsif($input_data[3] !~ /^\d{4}\-\d{2}-\d{2}$/){
+			print "Invalid date format. Date format should be YYYY-MM-DD\n";
+			next;
+		}elsif($input_data[4] !~ /^\d{1,2}$/ && ($input_data[4] < 1 && $input_data[4] >12)){
+			print"Duration should be a number between 1-12\n";
+			next;
+		}else{
+			push (@data,[@input_data]);
+		}
 	}
 }
 	
