@@ -7,6 +7,8 @@ use Text::Table;
 
 use Products;
 use DB;
+use Email;
+
 
 my (@data);
 
@@ -76,5 +78,12 @@ foreach (@$email_schedule){
 }
 
 print $tb;
+
+my $today_hyphen_dt = strftime "%Y-%m-%d", localtime;
+my $email_data=$dbh->select_email_data($today_hyphen_dt);
+
+my $mail=Email->new();
+
+$mail->send_email($dbh,$email_data,$today_hyphen_dt);
 
 exit 0;
