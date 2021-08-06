@@ -1,0 +1,5 @@
+customer_id|product_name|domain|subscription_start_date|duration|email_id|product_flag
+cust1234|hosting|xyzzy.com|2021-01-01|12|xyz@gmail.com|I
+cust2345|domain|plugh.com|2019-06-01|12|xyz@gmail.com|I
+cust3456|pdomain|plugh.com|2020-04-01|12|xyz@gmail.com|I
+cust1234|hosting|xyzzy.com|2021-01-01|12|xyz@gmail.com|D
