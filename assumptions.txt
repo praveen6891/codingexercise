@@ -1,0 +1,11 @@
+Assumptions:
+
+1) Assuming Script will be executed on Linux Machine 
+2) The list of products owned by customer will be shared in a *_<today_date>.DAT (customer_products_20210806.DAT) file in pipe separated format on a specific path in linux server (/home/praveen/customer_products/)
+		eg: customer_id|product_name|domain|subscription_start_date|duration|email_id|product_flag
+		product_flag can be I(add),D(Remove)
+3) Assuming 2 db tables customer and email schedule.
+4) Customer table with columns (CUSTOMER_ID,PRODUCT_NAME,DOMAIN,SUB_START_DATE,SUB_END_DATE)
+5) Email_schedule with columns (CUSTOMER_ID,PRODUCT_NAME,DOMAIN,EMAIL_DATE,EMAIL_ID,EMAIL_STATUS)
+6) Customer table to be used for adding new produts to customer
+7) Email_schedule table will hold the data with dates,email_id's etc. for sending emails to customer
